@@ -33,8 +33,8 @@ describe(NavListComponent.name, () => {
     const listItems = navList.querySelectorAll("a");
 
     expect(listItems.length).toBeGreaterThanOrEqual(1);
-    expect(listItems[0].href).toEqual("https://github.com/RSplinter00/DevToolBox");
-    expect(listItems[0].textContent).toContain("Support on Github");
+    expect(listItems[0].href).toEqual("https://github.com/RHSplinter/DevToolBox");
+    expect(listItems[0].textContent).toContain("Support on GitHub");
     expect(listItems[0].querySelector("mat-icon").textContent).toEqual("star");
     expect(listItems[0].getAttribute("target")).toEqual("_blank");
     expect(listItems[0].getAttribute("rel")).toEqual("noreferrer noopener");

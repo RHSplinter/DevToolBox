@@ -49,7 +49,7 @@ Contributions to the project are **highly appreciated**!
 If you have any suggestions or ideas, feel free to open an issue or submit a pull request.
 Also don't forget to give the project a **star**!
 
-1. Clone the project: `git clone https://github.com/RSplinter00/DevToolBox.git`
+1. Clone the project: `git clone https://github.com/RHSplinter/DevToolBox.git`
 2. Create your feature branch: `git checkout -b feature/YourGreatFeature`
 3. Commit your changes: `git commit -m "Add some great feature"`
 4. Push to the branch: `git push origin feature/YourGreatFeature`
@@ -62,7 +62,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 [app-url]: https://devtoolbox.raymondsplinter.com/
 
-[github-status-url]: https://img.shields.io/github/actions/workflow/status/RSplinter00/DevToolBox/build-pipeline.yml
+[github-status-url]: https://img.shields.io/github/actions/workflow/status/RHSplinter/DevToolBox/build-pipeline.yml
 
 [angular-url]: https://angular.io/
 
