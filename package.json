@@ -18,12 +18,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.2.14",
-    "@angular/cdk": "^17.0.1",
+    "@angular/cdk": "^18.2.14",
     "@angular/common": "^18.2.14",
     "@angular/compiler": "^18.2.14",
     "@angular/core": "^18.2.14",
     "@angular/forms": "^18.2.14",
-    "@angular/material": "^17.0.1",
+    "@angular/material": "^18.2.14",
     "@angular/platform-browser": "^18.2.14",
     "@angular/platform-browser-dynamic": "^18.2.14",
     "@angular/platform-server": "^18.2.14",
@@ -34,7 +34,7 @@
     "highlight.js": "^11.9.0",
     "jsonpath-plus": "^7.2.0",
     "ngx-clipboard": "^16.0.0",
-    "ngx-highlight-js": "^17.0.0",
+    "ngx-highlight-js": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"
@@ -56,7 +56,7 @@
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@typescript-eslint/types": "^8.46.1",
-    "@typescript-eslint/utils": "^7.2.0",
+    "@typescript-eslint/utils": "^8.46.1",
     "cypress": "latest",
     "diff": "^5.1.0",
     "eslint": "^8.57.0",
@@ -66,6 +66,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.5.4"
+    "typescript": "~5.4.0"
   }
 }

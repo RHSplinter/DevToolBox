@@ -6,5 +6,5 @@
 }
 
 .active {
-  background-color: mat.get-theme-color(colors.$theme-app, background, focused-button);
+  background-color: mat.get-theme-color(colors.$theme-app, primary-container);
 }
