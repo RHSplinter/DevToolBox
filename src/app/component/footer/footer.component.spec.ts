@@ -29,7 +29,7 @@ describe(FooterComponent.name, () => {
 
   it("should display a link with a Github icon", () => {
     const githubIcon = fixture.nativeElement.querySelector("[data-testid='github-icon']");
-    expect(githubIcon.href).toEqual("https://github.com/RSplinter00/DevToolBox");
+    expect(githubIcon.href).toEqual("https://github.com/RHSplinter/DevToolBox");
     expect(githubIcon.querySelector("i").classList).toContain("fa-github");
   });
 
