@@ -7,7 +7,6 @@ $theme-app: mat.define-theme((
   color: (
     theme-type: dark,
     primary: mat.$azure-palette,
-    // primary: mat.$violet-palette,
     tertiary: mat.$red-palette,
   ),
   typography: (
@@ -18,3 +17,11 @@ $theme-app: mat.define-theme((
     scale: 0,
   )
 ));
+
+:root {
+  @include mat.all-component-themes($theme-app);
+  --theme-background-color: #{mat.get-theme-color($theme-app, surface-container)};
+  --theme-text-color: #{mat.get-theme-color($theme-app, on-surface)};
+  --theme-outline-color: #{mat.get-theme-color($theme-app, outline)};
+  --theme-primary-container: #{mat.get-theme-color($theme-app, primary-container)};
+}

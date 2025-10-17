@@ -1,12 +1,4 @@
-@use "@angular/material" as mat;
-
-@include mat.core();
-
 @import "./app/styles/colors";
-
-:root {
-  @include mat.all-component-themes($theme-app);
-}
 
 html, body {
   height: 100%;
@@ -22,8 +14,8 @@ button {
 }
 
 textarea, input {
-  background-color: mat.get-theme-color($theme-app, surface-container);
-  color: mat.get-theme-color($theme-app, on-surface);
+  background-color: var(--theme-background-color);
+  color: var(--theme-text-color);
   border-radius: 10px;
   border: 1px solid white;
 }
@@ -51,7 +43,7 @@ input {
 
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: mat.get-theme-color($theme-app, outline);
+    background-color: var(--theme-outline-color);
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
@@ -61,7 +53,6 @@ input {
 }
 
 mat-option[aria-selected="true"] span {
-  color: mat.get-theme-color($theme-app, on-surface) !important;
   font-weight: bolder !important;
 }
 
