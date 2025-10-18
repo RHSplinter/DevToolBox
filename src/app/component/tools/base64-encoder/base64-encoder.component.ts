@@ -47,7 +47,7 @@ export class Base64EncoderComponent {
         default:
           this.output = input;
       }
-    } catch (e) {
+    } catch {
       this.output = `Invalid input: Unable to ${this.selectedOption} text`;
     }
   }

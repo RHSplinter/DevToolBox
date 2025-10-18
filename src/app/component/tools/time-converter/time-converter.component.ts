@@ -67,7 +67,7 @@ export class TimeConverterComponent implements OnInit {
         return "";
       }
       return this.datePipe.transform(utcDate, format);
-    } catch (e) {
+    } catch {
       return "Invalid Date";
     }
   }

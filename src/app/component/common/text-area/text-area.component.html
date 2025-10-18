@@ -5,7 +5,7 @@
       Clear
     </button>
 
-    @if (options != undefined && options.length > 0) {
+    @if (options !== undefined && options.length > 0) {
       <mat-select [formControl]="selectedOption" data-testid="options-select" tabindex="30">
         @for (option of options; track option) {
           <mat-option [value]="option" [attr.data-testid]="'option-' + option">{{ option }}</mat-option>

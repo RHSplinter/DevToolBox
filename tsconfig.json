@@ -24,6 +24,7 @@
     ]
   },
   "include": [
+    "src/**/*.ts",
     "./node_modules/@types/jest"
   ],
   "angularCompilerOptions": {
