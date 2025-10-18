@@ -6,11 +6,10 @@ import {TextAreaComponent} from "../../common/text-area/text-area.component";
 import {JsonViewerComponent} from "../../common/json-viewer/json-viewer.component";
 
 @Component({
-  selector: "app-json-validator",
-  standalone: true,
-  imports: [CommonModule, HighlightJsModule, MatGridListModule, TextAreaComponent, JsonViewerComponent],
-  templateUrl: "./json-validator.component.html",
-  styleUrls: ["./json-validator.component.scss", "../../../styles/tools-styles.scss"]
+    selector: "app-json-validator",
+    imports: [CommonModule, HighlightJsModule, MatGridListModule, TextAreaComponent, JsonViewerComponent],
+    templateUrl: "./json-validator.component.html",
+    styleUrls: ["./json-validator.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class JsonValidatorComponent {
   jsonObject: object | string | undefined;

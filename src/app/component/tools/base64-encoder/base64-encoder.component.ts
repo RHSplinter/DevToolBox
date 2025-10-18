@@ -7,11 +7,10 @@ import {EncodingService} from "../../../service/encoding.service";
 import {EncodingOptions} from "../../../model/encoding-options";
 
 @Component({
-  selector: "app-base64-encoder",
-  standalone: true,
-  imports: [CommonModule, TextAreaComponent, MatGridListModule, ReadonlyTextAreaComponent],
-  templateUrl: "./base64-encoder.component.html",
-  styleUrls: ["./base64-encoder.component.scss", "../../../styles/tools-styles.scss"]
+    selector: "app-base64-encoder",
+    imports: [CommonModule, TextAreaComponent, MatGridListModule, ReadonlyTextAreaComponent],
+    templateUrl: "./base64-encoder.component.html",
+    styleUrls: ["./base64-encoder.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class Base64EncoderComponent {
   readonly options: string[] = Object.values(EncodingOptions);

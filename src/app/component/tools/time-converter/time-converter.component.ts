@@ -9,12 +9,11 @@ import {TimeConversionOptions} from "../../../model/time-conversion-options";
 import {MatSelectModule} from "@angular/material/select";
 
 @Component({
-  selector: "app-time-converter",
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule, ReactiveFormsModule, OutputFieldComponent, MatSelectModule],
-  providers: [DatePipe],
-  templateUrl: "./time-converter.component.html",
-  styleUrl: "./time-converter.component.scss"
+    selector: "app-time-converter",
+    imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule, ReactiveFormsModule, OutputFieldComponent, MatSelectModule],
+    providers: [DatePipe],
+    templateUrl: "./time-converter.component.html",
+    styleUrl: "./time-converter.component.scss"
 })
 export class TimeConverterComponent implements OnInit {
   readonly timeConversionOptions: string[] = Object.values(TimeConversionOptions);

@@ -1,6 +1,7 @@
 @use "@angular/material" as mat;
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 // Material Design 3 theme with custom indigo colors
 $theme-app: mat.define-theme((
@@ -19,9 +20,10 @@ $theme-app: mat.define-theme((
 ));
 
 :root {
-  @include mat.all-component-themes($theme-app);
   --theme-background-color: #{mat.get-theme-color($theme-app, surface-container)};
   --theme-text-color: #{mat.get-theme-color($theme-app, on-surface)};
   --theme-outline-color: #{mat.get-theme-color($theme-app, outline)};
   --theme-primary-container: #{mat.get-theme-color($theme-app, primary-container)};
+  
+  @include mat.all-component-themes($theme-app);
 }
