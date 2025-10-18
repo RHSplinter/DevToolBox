@@ -1,5 +1,4 @@
 import {Component, Input, OnChanges, OnInit} from "@angular/core";
-import {CommonModule} from "@angular/common";
 import {HighlightJsDirective} from "ngx-highlight-js";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
@@ -11,7 +10,7 @@ import {JSONPath} from "jsonpath-plus";
 
 @Component({
     selector: "app-json-viewer",
-    imports: [CommonModule, HighlightJsDirective, MatCardModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatInputModule],
+    imports: [HighlightJsDirective, MatCardModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatInputModule],
     templateUrl: "./json-viewer.component.html",
     styleUrls: ["./json-viewer.component.scss", "../../../styles/tools-styles.scss"]
 })

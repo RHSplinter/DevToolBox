@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {CommonModule, DatePipe} from "@angular/common";
+import {DatePipe} from "@angular/common";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
@@ -10,7 +10,7 @@ import {MatSelectModule} from "@angular/material/select";
 
 @Component({
     selector: "app-time-converter",
-    imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule, ReactiveFormsModule, OutputFieldComponent, MatSelectModule],
+    imports: [FormsModule, MatInputModule, MatButtonModule, ReactiveFormsModule, OutputFieldComponent, MatSelectModule],
     providers: [DatePipe],
     templateUrl: "./time-converter.component.html",
     styleUrl: "./time-converter.component.scss"

@@ -1,5 +1,4 @@
 import {Component} from "@angular/core";
-import {CommonModule} from "@angular/common";
 import {TextAreaComponent} from "../../common/text-area/text-area.component";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {ReadonlyTextAreaComponent} from "../../common/readonly-text-area/readonly-text-area.component";
@@ -8,7 +7,7 @@ import {EncodingOptions} from "../../../model/encoding-options";
 
 @Component({
     selector: "app-base64-encoder",
-    imports: [CommonModule, TextAreaComponent, MatGridListModule, ReadonlyTextAreaComponent],
+    imports: [TextAreaComponent, MatGridListModule, ReadonlyTextAreaComponent],
     templateUrl: "./base64-encoder.component.html",
     styleUrls: ["./base64-encoder.component.scss", "../../../styles/tools-styles.scss"]
 })

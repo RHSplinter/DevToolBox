@@ -1,8 +1,8 @@
+import {DOCUMENT} from '@angular/core';
 import {PageTitleStrategy} from "./page-title.strategy";
 import {provideRouter, Router, TitleStrategy} from "@angular/router";
 import {fakeAsync, TestBed, tick} from "@angular/core/testing";
 import {provideLocationMocks} from "@angular/common/testing";
-import {DOCUMENT} from "@angular/common";
 import {HomeComponent} from "../component/home/home.component";
 
 describe(PageTitleStrategy.name, () => {

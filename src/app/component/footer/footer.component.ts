@@ -1,10 +1,9 @@
 import {Component} from "@angular/core";
-import {CommonModule} from "@angular/common";
 import {MatDividerModule} from "@angular/material/divider";
 
 @Component({
     selector: "app-footer",
-    imports: [CommonModule, MatDividerModule],
+    imports: [MatDividerModule],
     templateUrl: "./footer.component.html",
     styleUrl: "./footer.component.scss"
 })
