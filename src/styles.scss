@@ -1,4 +1,4 @@
-@import "./app/styles/colors";
+@use "./app/styles/colors" as colors;
 
 html, body {
   height: 100%;

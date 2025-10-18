@@ -6,11 +6,10 @@ import {MatIconModule} from "@angular/material/icon";
 import {NavListItem} from "../../model/nav-list-item";
 
 @Component({
-  selector: "app-nav-list",
-  standalone: true,
-  imports: [CommonModule, MatListModule, RouterLink, MatIconModule, RouterLinkActive],
-  templateUrl: "./nav-list.component.html",
-  styleUrl: "./nav-list.component.scss"
+    selector: "app-nav-list",
+    imports: [CommonModule, MatListModule, RouterLink, MatIconModule, RouterLinkActive],
+    templateUrl: "./nav-list.component.html",
+    styleUrl: "./nav-list.component.scss"
 })
 export class NavListComponent {
   navItems: NavListItem[] = [

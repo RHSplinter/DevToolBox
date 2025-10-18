@@ -10,11 +10,10 @@ import {JSONPath} from "jsonpath-plus";
 
 
 @Component({
-  selector: "app-json-viewer",
-  standalone: true,
-  imports: [CommonModule, HighlightJsDirective, MatCardModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatInputModule],
-  templateUrl: "./json-viewer.component.html",
-  styleUrls: ["./json-viewer.component.scss", "../../../styles/tools-styles.scss"]
+    selector: "app-json-viewer",
+    imports: [CommonModule, HighlightJsDirective, MatCardModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatInputModule],
+    templateUrl: "./json-viewer.component.html",
+    styleUrls: ["./json-viewer.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class JsonViewerComponent implements OnChanges, OnInit {
   readonly spacingOptions: string[] = ["2", "4"]

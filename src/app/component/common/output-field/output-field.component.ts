@@ -7,11 +7,10 @@ import {MatInputModule} from "@angular/material/input";
 import {ClipboardModule} from "ngx-clipboard";
 
 @Component({
-  selector: "app-output-field",
-  standalone: true,
-  imports: [CommonModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, ClipboardModule],
-  templateUrl: "./output-field.component.html",
-  styleUrl: "./output-field.component.scss"
+    selector: "app-output-field",
+    imports: [CommonModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, ClipboardModule],
+    templateUrl: "./output-field.component.html",
+    styleUrl: "./output-field.component.scss"
 })
 export class OutputFieldComponent {
   @Input() label!: string;
