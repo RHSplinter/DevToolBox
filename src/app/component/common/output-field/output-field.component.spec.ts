@@ -1,7 +1,6 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {OutputFieldComponent} from "./output-field.component";
-import {provideNoopAnimations} from "@angular/platform-browser/animations";
 import {ClipboardModule} from "ngx-clipboard";
 
 describe(OutputFieldComponent.name, () => {
@@ -11,7 +10,7 @@ describe(OutputFieldComponent.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [OutputFieldComponent, ClipboardModule],
-      providers: [provideNoopAnimations(), Clipboard]
+      providers: [Clipboard]
     }).compileComponents();
 
     fixture = TestBed.createComponent(OutputFieldComponent);

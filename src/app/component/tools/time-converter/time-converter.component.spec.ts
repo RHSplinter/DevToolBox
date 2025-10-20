@@ -1,7 +1,6 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {TimeConverterComponent} from "./time-converter.component";
-import {provideNoopAnimations} from "@angular/platform-browser/animations";
 import {TimeConversionOptions} from "../../../model/time-conversion-options";
 
 describe(TimeConverterComponent.name, () => {
@@ -19,8 +18,7 @@ describe(TimeConverterComponent.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TimeConverterComponent],
-      providers: [provideNoopAnimations()]
+      imports: [TimeConverterComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TimeConverterComponent);

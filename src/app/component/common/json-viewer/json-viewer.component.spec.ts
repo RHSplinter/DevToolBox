@@ -5,7 +5,6 @@ import {HarnessLoader} from "@angular/cdk/testing";
 import {TestbedHarnessEnvironment} from "@angular/cdk/testing/testbed";
 import {MatSelectHarness} from "@angular/material/select/testing";
 import {MatOptionHarness} from "@angular/material/core/testing";
-import {provideNoopAnimations} from "@angular/platform-browser/animations";
 
 describe(JsonViewerComponent.name, () => {
   const inputObject: object = {
@@ -20,8 +19,7 @@ describe(JsonViewerComponent.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [JsonViewerComponent],
-      providers: [provideNoopAnimations()]
+      imports: [JsonViewerComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(JsonViewerComponent);

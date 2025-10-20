@@ -5,7 +5,6 @@ import {HarnessLoader} from "@angular/cdk/testing";
 import {TestbedHarnessEnvironment} from "@angular/cdk/testing/testbed";
 import {MatSelectHarness} from "@angular/material/select/testing";
 import {MatOptionHarness} from "@angular/material/core/testing";
-import {provideNoopAnimations} from "@angular/platform-browser/animations";
 
 type InputParameter = {
   input: string | null,
@@ -24,8 +23,7 @@ describe(TextAreaComponent.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TextAreaComponent],
-      providers: [provideNoopAnimations()]
+      imports: [TextAreaComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TextAreaComponent);
