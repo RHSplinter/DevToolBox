@@ -1,4 +1,4 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
+import {ComponentFixture, fakeAsync, TestBed, tick, waitForAsync} from "@angular/core/testing";
 
 import {NavListComponent} from "./nav-list.component";
 import {provideRouter, Router} from "@angular/router";
@@ -57,10 +57,12 @@ describe(NavListComponent.name, () => {
     });
   });
 
-  it("should display active nav  item", fakeAsync(() => {
-    router.navigate(["/tools/base64-encoder"]);
-    tick();
-    const activeLinks: DebugElement[] = fixture.debugElement.queryAll(By.css(".active"));
-    expect(activeLinks).toHaveSize(1);
+  it("should display active nav item", waitForAsync(async () => {
+    await router.navigate(["/tools/base64-encoder"]);
+    fixture.detectChanges();
+
+    const base64EncoderNavItem = fixture.nativeElement.querySelector("[data-testid='nav-item-base64-encoder']");
+    expect(base64EncoderNavItem).toBeTruthy();
+    expect(base64EncoderNavItem.classList.contains('active')).toBeTrue();
   }));
 });

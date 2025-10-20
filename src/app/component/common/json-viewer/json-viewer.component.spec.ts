@@ -49,7 +49,7 @@ describe(JsonViewerComponent.name, () => {
     const textarea = content.querySelector("mat-card mat-card-content textarea")
     expect(textarea).toBeTruthy();
     expect(textarea.getAttribute("highlight-js")).toEqual("");
-    expect(textarea.getAttribute("ng-reflect-lang")).toEqual("json");
+    expect(textarea.getAttribute("lang")).toEqual("json");
   });
 
   it("should display the formatted json object", () => {
