@@ -1,5 +1,4 @@
-import {Component} from "@angular/core";
-import {CommonModule} from "@angular/common";
+import { Component, inject } from "@angular/core";
 import {TextAreaComponent} from "../../common/text-area/text-area.component";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {ReadonlyTextAreaComponent} from "../../common/readonly-text-area/readonly-text-area.component";
@@ -8,19 +7,18 @@ import {EncodingOptions} from "../../../model/encoding-options";
 
 @Component({
     selector: "app-base64-encoder",
-    imports: [CommonModule, TextAreaComponent, MatGridListModule, ReadonlyTextAreaComponent],
+    imports: [TextAreaComponent, MatGridListModule, ReadonlyTextAreaComponent],
     templateUrl: "./base64-encoder.component.html",
     styleUrls: ["./base64-encoder.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class Base64EncoderComponent {
+  private encodingService = inject(EncodingService);
+
   readonly options: string[] = Object.values(EncodingOptions);
 
   input: string = "";
   output: string = "";
   selectedOption: string = "";
-
-  constructor(private encodingService: EncodingService) {
-  }
 
   setOptions(selectedOption: string): void {
     this.selectedOption = selectedOption;

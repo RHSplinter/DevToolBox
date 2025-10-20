@@ -5,7 +5,6 @@ import {HarnessLoader} from "@angular/cdk/testing";
 import {TestbedHarnessEnvironment} from "@angular/cdk/testing/testbed";
 import {MatSelectHarness} from "@angular/material/select/testing";
 import {MatOptionHarness} from "@angular/material/core/testing";
-import {provideNoopAnimations} from "@angular/platform-browser/animations";
 
 describe(JsonViewerComponent.name, () => {
   const inputObject: object = {
@@ -20,8 +19,7 @@ describe(JsonViewerComponent.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [JsonViewerComponent],
-      providers: [provideNoopAnimations()]
+      imports: [JsonViewerComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(JsonViewerComponent);
@@ -49,7 +47,7 @@ describe(JsonViewerComponent.name, () => {
     const textarea = content.querySelector("mat-card mat-card-content textarea")
     expect(textarea).toBeTruthy();
     expect(textarea.getAttribute("highlight-js")).toEqual("");
-    expect(textarea.getAttribute("ng-reflect-lang")).toEqual("json");
+    expect(textarea.getAttribute("lang")).toEqual("json");
   });
 
   it("should display the formatted json object", () => {

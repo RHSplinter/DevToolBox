@@ -1,5 +1,4 @@
 import {Component, Input} from "@angular/core";
-import {CommonModule} from "@angular/common";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
@@ -8,7 +7,7 @@ import {ClipboardModule} from "ngx-clipboard";
 
 @Component({
     selector: "app-output-field",
-    imports: [CommonModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, ClipboardModule],
+    imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, ClipboardModule],
     templateUrl: "./output-field.component.html",
     styleUrl: "./output-field.component.scss"
 })
