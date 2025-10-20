@@ -1,14 +1,12 @@
 import {RouterStateSnapshot, TitleStrategy} from "@angular/router";
 import {Title} from "@angular/platform-browser";
-import {Injectable} from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 @Injectable()
 export class PageTitleStrategy extends TitleStrategy {
-  private readonly applicationName: string = "Dev's ToolBox";
+  private readonly title = inject(Title);
 
-  constructor(private readonly title: Title) {
-    super();
-  }
+  private readonly applicationName: string = "Dev's ToolBox";
 
   override updateTitle(routerState: RouterStateSnapshot): void {
     const title: string | undefined = this.buildTitle(routerState);

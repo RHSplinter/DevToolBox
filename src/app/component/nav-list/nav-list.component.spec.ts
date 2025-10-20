@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {NavListComponent} from "./nav-list.component";
-import {provideRouter, Router} from "@angular/router";
+import {provideRouter} from "@angular/router";
 import {NavListItem} from "../../model/nav-list-item";
 import {routes} from "../../app.routes";
 
