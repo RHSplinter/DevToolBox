@@ -12,7 +12,7 @@ Checkout the project at [devtoolbox.raymondsplinter.com][app-url]
 
 ## Built with
 
-This is an [Angular][angular-url] 17 project, designed with Angular Material. To learn more about these, checkout the following resources:
+This is an [Angular][angular-url] 19 project, designed with Angular Material. To learn more about these, checkout the following resources:
 
 - [Angular][angular-docs-url] - Learn about Angular and its core concepts.
 - [Angular Material][angular-material-url] - Learn about Angular Material and its components.

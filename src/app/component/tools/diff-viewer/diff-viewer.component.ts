@@ -8,12 +8,11 @@ import {CdkVirtualForOf, ScrollingModule} from "@angular/cdk/scrolling";
 import {ChangeInfo} from "../../../model/change-info";
 
 @Component({
-  selector: "app-diff-viewer",
-  standalone: true,
-  imports: [CommonModule, TextAreaComponent, MatGridListModule, MatCardModule, CdkVirtualForOf, ScrollingModule],
-  templateUrl: "./diff-viewer.component.html",
-  styleUrls: ["./diff-viewer.component.scss", "../../../styles/tools-styles.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: "app-diff-viewer",
+    imports: [CommonModule, TextAreaComponent, MatGridListModule, MatCardModule, CdkVirtualForOf, ScrollingModule],
+    templateUrl: "./diff-viewer.component.html",
+    styleUrls: ["./diff-viewer.component.scss", "../../../styles/tools-styles.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DiffViewerComponent {
   original: string = "";

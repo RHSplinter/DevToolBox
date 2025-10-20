@@ -1,5 +1,5 @@
-import {Component, OnInit} from "@angular/core";
-import {CommonModule, DatePipe} from "@angular/common";
+import { Component, OnInit, inject } from "@angular/core";
+import {DatePipe} from "@angular/common";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
@@ -9,14 +9,16 @@ import {TimeConversionOptions} from "../../../model/time-conversion-options";
 import {MatSelectModule} from "@angular/material/select";
 
 @Component({
-  selector: "app-time-converter",
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule, ReactiveFormsModule, OutputFieldComponent, MatSelectModule],
-  providers: [DatePipe],
-  templateUrl: "./time-converter.component.html",
-  styleUrl: "./time-converter.component.scss"
+    selector: "app-time-converter",
+    imports: [FormsModule, MatInputModule, MatButtonModule, ReactiveFormsModule, OutputFieldComponent, MatSelectModule],
+    providers: [DatePipe],
+    templateUrl: "./time-converter.component.html",
+    styleUrl: "./time-converter.component.scss"
 })
 export class TimeConverterComponent implements OnInit {
+  private timeConversionService = inject(TimeConversionService);
+  private datePipe = inject(DatePipe);
+
   readonly timeConversionOptions: string[] = Object.values(TimeConversionOptions);
   readonly otherDateFormats: string[] = ["yyyy-MM-dd", "yyyy/MM/dd", "MM-dd-yyyy", "MM/dd/yyyy"];
 
@@ -28,9 +30,6 @@ export class TimeConverterComponent implements OnInit {
     isoTime: new FormControl(),
     unixTime: new FormControl(),
   });
-
-  constructor(private timeConversionService: TimeConversionService, private datePipe: DatePipe) {
-  }
 
   ngOnInit(): void {
     this.timeConversionForm.get("inputTimestamp")?.valueChanges.subscribe(() => this.convertTimestamp());
@@ -67,7 +66,7 @@ export class TimeConverterComponent implements OnInit {
         return "";
       }
       return this.datePipe.transform(utcDate, format);
-    } catch (e) {
+    } catch {
       return "Invalid Date";
     }
   }

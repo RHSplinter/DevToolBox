@@ -1,10 +1,7 @@
-@use "@angular/material" as mat;
-@use "../../styles/colors" as colors;
-
 .mat-mdc-list-item {
   border-bottom: 1px solid rgb(192, 192, 192);
 }
 
 .active {
-  background-color: mat.get-theme-color(colors.$theme-app, background, focused-button);
+  background-color: var(--theme-primary-container, #3c5596); /* fallback color */
 }
