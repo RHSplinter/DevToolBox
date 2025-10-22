@@ -1,4 +1,6 @@
 name: dev-tool-box
+permissions:
+  contents: read
 
 on:
   push:
