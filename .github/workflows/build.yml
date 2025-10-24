@@ -73,6 +73,11 @@ jobs:
         browser: [chrome, firefox, edge]
       fail-fast: false
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -109,10 +114,9 @@ jobs:
   report:
     needs: [build, e2e]
     runs-on: ubuntu-latest
-    if: always()
+    if: success()
     steps:
       - name: Report build success
-        if: success()
         run: |
           echo "🎉 Build Tests completed successfully!" >> $GITHUB_STEP_SUMMARY
           echo "✅ Linting Passed" >> $GITHUB_STEP_SUMMARY
