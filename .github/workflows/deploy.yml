@@ -1,0 +1,98 @@
+name: Deploy to AWS
+
+permissions:
+  contents: read
+
+on:
+  workflow_run:
+    workflows: [Build SPA, E2E Tests]
+    types:
+      - completed
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build:prod
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: devtoolbox-artifacts
+          path: dist/dev-tool-box/browser/
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://devtoolbox.raymondsplinter.com
+    env:
+      DEPLOY_URL: https://devtoolbox.raymondsplinter.com
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: devtoolbox-artifacts
+          path: dist/dev-tool-box/browser/
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy application to S3
+        run: aws s3 sync dist/dev-tool-box/browser/ s3://${{ secrets.S3_BUCKET }}
+
+      - name: Invalidate CloudFront cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+
+      - name: Smoke test - Validate deployment
+        run: |
+          echo "Waiting for CloudFront to cache invalidate..."
+          sleep 5
+          
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOY_URL")
+          echo "HTTP Response Code: $RESPONSE"
+          
+          if [ "$RESPONSE" = "200" ]; then
+            echo "✅ Smoke test passed: Website is accessible at $DEPLOY_URL"
+          else
+            echo "❌ Smoke test failed: HTTP $RESPONSE"
+            exit 1
+          fi
+
+      - name: Deployment notification
+        if: success()
+        run: echo "✅ Deployment to production completed successfully"
+
+      - name: Deployment failure notification
+        if: failure()
+        run: |
+          echo "❌ Deployment failed"
+          exit 1

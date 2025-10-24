@@ -1,0 +1,72 @@
+name: CI Build
+
+permissions:
+  contents: read
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE.txt'
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE.txt'
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting
+        run: npm run lint
+
+      - name: Build application
+        run: npm run build:prod
+
+      - name: Run unit tests
+        run: npm run test:prod
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: coverage/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload build artifacts
+        id: artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: devtoolbox-artifacts
+          path: dist/dev-tool-box/browser/
+          retention-days: 5
+          if-no-files-found: error
+        env:
+          ARTIFACT_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+      
+      - name: Report build success
+        run: |
+          echo "🎉 Build completed successfully!" 
+          echo "✅ Linting Passed"
+          echo "✅ All unit tests passed"
