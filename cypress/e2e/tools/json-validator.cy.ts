@@ -28,7 +28,9 @@ describe("JSON Validator Page", () => {
   it("should display error message when invalid json is entered", () => {
     cy.visit("/tools/json-validator");
     cy.get("[data-testid='input-textarea']").should("exist").type("{");
-    cy.get("[data-testid='json-output']").should("contain.value", "Expected property name or '}' in JSON at position 1");
+    cy.get("[data-testid='json-output']")
+      .invoke('val')
+      .should('include', "Expected property name or '}' in JSON at position 1");
     cy.get("[data-testid='input-textarea']").should("exist").type("\"name\":}", options);
     cy.get("[data-testid='json-output']").should("have.value", "Unexpected token '}', \"{\"name\":}\" is not valid JSON");
   });
@@ -46,10 +48,13 @@ describe("JSON Validator Page", () => {
     cy.get("[data-testid='input-textarea']").should("exist")
       .type(JSON.stringify(inputObject), options);
     cy.get("[data-testid='copy-btn']").should("exist").focus().realClick();
-    cy.window().then((win: AUTWindow) => {
-      win.navigator.clipboard.readText()
-        .then((text: string) => expect(text).to.eq(JSON.stringify(inputObject, null, 4)));
-    });
+    // Clipboard is only available for Chromium-based browsers in Cypress tests.
+    if (!Cypress.isBrowser('firefox')) {
+      cy.window().then((win: AUTWindow) => {
+        win.navigator.clipboard.readText()
+          .then((text: string) => expect(text).to.eq(JSON.stringify(inputObject, null, 4)));
+      });
+    }
   });
 
   it("should show the filtered data if JSON path filter is given", () => {
@@ -75,9 +80,12 @@ describe("JSON Validator Page", () => {
       .type(JSON.stringify(inputObject), options);
     cy.get("[data-testid='filter-input']").should("exist").type("$.cart[0].item");
     cy.get("[data-testid='copy-btn']").should("exist").focus().realClick();
-    cy.window().then((win: AUTWindow) => {
-      win.navigator.clipboard.readText()
-        .then((text: string) => expect(text).to.eq(JSON.stringify(["apple"], null, 4)));
-    });
+    // Clipboard is only available for Chromium-based browsers in Cypress tests.
+    if (!Cypress.isBrowser('firefox')) {
+      cy.window().then((win: AUTWindow) => {
+        win.navigator.clipboard.readText()
+          .then((text: string) => expect(text).to.eq(JSON.stringify(["apple"], null, 4)));
+      });
+    }
   });
 });

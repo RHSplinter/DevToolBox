@@ -64,9 +64,12 @@ describe("Base64 Encoder Page", () => {
     cy.visit("/tools/base64-encoder");
     cy.get("[data-testid='input-textarea']").should("exist").type("Test");
     cy.get("[data-testid='copy-btn']").should("exist").click();
-    cy.window().then((win: AUTWindow) => {
-      win.navigator.clipboard.readText().then((text: string) => expect(text).to.eq('VGVzdA=='));
-    });
+    // Clipboard is only available for Chromium-based browsers in Cypress tests.
+    if (!Cypress.isBrowser('firefox')) {
+      cy.window().then((win: AUTWindow) => {
+        win.navigator.clipboard.readText().then((text: string) => expect(text).to.eq('VGVzdA=='));
+      });
+    }
   });
 
   it("should be able to clear input", () => {
