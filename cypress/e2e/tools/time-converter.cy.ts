@@ -80,8 +80,13 @@ describe("Time Converter Page", () => {
       cy.get("[data-testid='timestamp-input']").should("exist").type(timestamps["epoch"]);
       cy.get("[data-testid='output-utc-timezone']").should("exist")
         .get("[data-testid='copy-btn']").should("exist").realClick();
-      // Clipboard is only available for Chromium-based browsers in Cypress tests.
-      if (!Cypress.isBrowser('firefox')) {
+      if (Cypress.isBrowser('firefox')) {
+        // Firefox: clipboard API may not be available, so check output field value
+        cy.get("[data-testid='output-utc-timezone']")
+          .invoke('val')
+          .should('eq', timestamps["utc"]);
+      } else {
+        // Chromium browsers: clipboard API is available
         cy.window().then((win: AUTWindow) => {
           win.navigator.clipboard.readText().then((text: string) => expect(text).to.eq(timestamps["utc"]));
         });
