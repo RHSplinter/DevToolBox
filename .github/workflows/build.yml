@@ -64,9 +64,57 @@ jobs:
           if-no-files-found: error
         env:
           ARTIFACT_ID: ${{ github.run_id }}-${{ github.run_attempt }}
-      
+
+  e2e:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chrome, firefox, edge]
+      fail-fast: false
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: devtoolbox-artifacts
+          path: dist/dev-tool-box/browser/
+
+      - name: Run E2E tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run start
+          wait-on: http://localhost:4200
+          browser: ${{ matrix.browser }}
+          record: false
+          spec: cypress/e2e/**/*.cy.ts
+
+      - name: Upload Cypress screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots-${{ matrix.browser }}
+          path: cypress/screenshots/
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Upload Cypress videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-videos-${{ matrix.browser }}
+          path: cypress/videos/
+          retention-days: 7
+          if-no-files-found: ignore
+
+  report:
+    needs: [build, e2e]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
       - name: Report build success
+        if: success()
         run: |
-          echo "🎉 Build completed successfully!" 
-          echo "✅ Linting Passed"
-          echo "✅ All unit tests passed"
+          echo "🎉 Build Tests completed successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Linting Passed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All unit tests passed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All E2E tests passed (Chrome, Firefox, Edge)" >> $GITHUB_STEP_SUMMARY

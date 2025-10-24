@@ -5,7 +5,7 @@ permissions:
 
 on:
   workflow_run:
-    workflows: [Build SPA, E2E Tests]
+    workflows: [CI Build, E2E Tests]
     types:
       - completed
     branches:
