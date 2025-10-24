@@ -11,3 +11,7 @@ updates:
       interval: "weekly"
       day: "saturday"
       time: "13:01"
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
