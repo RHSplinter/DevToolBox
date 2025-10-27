@@ -74,23 +74,16 @@ describe("Time Converter Page", () => {
     cy.get("[data-testid='other-formats-header']").should("not.exist");
   });
 
-  it("should copy value on copy button pressed", () => {
+  // Clipboard write/read is only available for Chromium-based browsers in Cypress tests.
+  (Cypress.isBrowser('firefox') ? it.skip : it)("should copy value on copy button pressed", () => {
     cy.fixture("timestamps.json").then((timestamps: Timestamps) => {
       cy.visit("/tools/time-converter");
       cy.get("[data-testid='timestamp-input']").should("exist").type(timestamps["epoch"]);
       cy.get("[data-testid='output-utc-timezone']").should("exist")
         .get("[data-testid='copy-btn']").should("exist").realClick();
-      if (Cypress.isBrowser('firefox')) {
-        // Firefox: clipboard API may not be available, so check output field value
-        cy.get("[data-testid='output-utc-timezone']")
-          .invoke('val')
-          .should('eq', timestamps["utc"]);
-      } else {
-        // Chromium browsers: clipboard API is available
-        cy.window().then((win: AUTWindow) => {
-          win.navigator.clipboard.readText().then((text: string) => expect(text).to.eq(timestamps["utc"]));
-        });
-      }
+     cy.window().then((win: AUTWindow) => {
+        win.navigator.clipboard.readText().then((text: string) => expect(text).to.eq(timestamps["utc"]));
+      });
     });
   });
 });

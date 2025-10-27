@@ -60,6 +60,7 @@ describe("Base64 Encoder Page", () => {
     });
   });
 
+  // Clipboard write/read is only available for Chromium-based browsers in Cypress tests.
   (Cypress.isBrowser('firefox') ? it.skip : it)("should be able to copy output to clipboard", () => {
     cy.visit("/tools/base64-encoder");
     cy.get("[data-testid='input-textarea']").should("exist").type("Test");
