@@ -23,16 +23,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
     steps:
-      - name: Test Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-region: ${{ env.AWS_REGION }}
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
-
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -120,15 +111,3 @@ jobs:
           path: cypress/videos/
           retention-days: 7
           if-no-files-found: ignore
-
-  report:
-    needs: [build, e2e]
-    runs-on: ubuntu-latest
-    if: success()
-    steps:
-      - name: Report build success
-        run: |
-          echo "🎉 Build Tests completed successfully!" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Linting Passed" >> $GITHUB_STEP_SUMMARY
-          echo "✅ All unit tests passed" >> $GITHUB_STEP_SUMMARY
-          echo "✅ All E2E tests passed (Chrome, Firefox, Edge)" >> $GITHUB_STEP_SUMMARY
