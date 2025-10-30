@@ -76,13 +76,18 @@ jobs:
         run: aws s3 sync dist/dev-tool-box/browser/ s3://${{ secrets.S3_BUCKET }}
 
       - name: Invalidate CloudFront cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+        id: invalidate
+        run: |
+          INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*" --query 'Invalidation.Id' --output text)
+          echo "invalidation-id=$INVALIDATION_ID" >> $GITHUB_OUTPUT
+
+      - name: Wait for CloudFront invalidation
+        run: |
+          aws cloudfront wait invalidation-completed --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --id ${{ steps.invalidate.outputs.invalidation-id }}
+          echo "✅ CloudFront cache invalidation completed"
 
       - name: Smoke test - Validate deployment
         run: |
-          echo "Waiting for CloudFront to cache invalidate..."
-          sleep 5
-          
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOY_URL")
           echo "HTTP Response Code: $RESPONSE"
           
