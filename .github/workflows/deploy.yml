@@ -16,6 +16,10 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  AWS_REGION: eu-central-1
+  AWS_ROLE_ARN: arn:aws:iam::120150663375:role/DeployDevToolBoxRole
+
 jobs:
   build:
     runs-on: ubuntu-latest
