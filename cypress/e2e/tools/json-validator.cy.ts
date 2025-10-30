@@ -33,8 +33,8 @@ describe("JSON Validator Page", () => {
       .should('match', /Expected property name|end of data while reading object contents/);
     cy.get("[data-testid='input-textarea']").should("exist").type("\"name\":}", options);
     cy.get("[data-testid='json-output']")
-          .invoke('val')
-          .should("match", /Unexpected token|unexpected character/);
+      .invoke('val')
+      .should("match", /Unexpected token|unexpected character/);
   });
 
   it("clear json output on clear button pressed", () => {
