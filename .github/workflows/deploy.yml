@@ -1,0 +1,109 @@
+name: Deploy to AWS
+
+on:
+  workflow_run:
+    workflows: [CI Build]
+    types:
+      - completed
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  AWS_REGION: eu-central-1
+  AWS_ROLE_ARN: arn:aws:iam::120150663375:role/DeployDevToolBoxRole
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build:prod
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: devtoolbox-artifacts
+          path: dist/dev-tool-box/browser/
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    environment:
+      name: production
+      url: https://devtoolbox.raymondsplinter.com
+    env:
+      DEPLOY_URL: https://devtoolbox.raymondsplinter.com
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: devtoolbox-artifacts
+          path: dist/dev-tool-box/browser/
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+
+      - name: Deploy application to S3
+        run: aws s3 sync dist/dev-tool-box/browser/ s3://${{ secrets.S3_BUCKET }}
+
+      - name: Invalidate CloudFront cache
+        id: invalidate
+        run: |
+          INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*" --query 'Invalidation.Id' --output text)
+          echo "invalidation-id=$INVALIDATION_ID" >> $GITHUB_OUTPUT
+
+      - name: Wait for CloudFront invalidation
+        run: |
+          aws cloudfront wait invalidation-completed --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --id ${{ steps.invalidate.outputs.invalidation-id }}
+          echo "✅ CloudFront cache invalidation completed"
+
+      - name: Smoke test - Validate deployment
+        run: |
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOY_URL")
+          echo "HTTP Response Code: $RESPONSE"
+          
+          if [ "$RESPONSE" = "200" ]; then
+            echo "✅ Smoke test passed: Website is accessible at $DEPLOY_URL"
+          else
+            echo "❌ Smoke test failed: HTTP $RESPONSE"
+            exit 1
+          fi
+
+      - name: Deployment notification
+        if: success()
+        run: echo "✅ Deployment to production completed successfully"
+
+      - name: Deployment failure notification
+        if: failure()
+        run: |
+          echo "❌ Deployment failed"
+          exit 1

@@ -74,7 +74,8 @@ describe("Time Converter Page", () => {
     cy.get("[data-testid='other-formats-header']").should("not.exist");
   });
 
-  it("should copy value on copy button pressed", () => {
+  // Clipboard write/read is only available for Chromium-based browsers in Cypress tests.
+  (Cypress.isBrowser('firefox') ? it.skip : it)("should copy value on copy button pressed", () => {
     cy.fixture("timestamps.json").then((timestamps: Timestamps) => {
       cy.visit("/tools/time-converter");
       cy.get("[data-testid='timestamp-input']").should("exist").type(timestamps["epoch"]);

@@ -28,9 +28,13 @@ describe("JSON Validator Page", () => {
   it("should display error message when invalid json is entered", () => {
     cy.visit("/tools/json-validator");
     cy.get("[data-testid='input-textarea']").should("exist").type("{");
-    cy.get("[data-testid='json-output']").should("contain.value", "Expected property name or '}' in JSON at position 1");
+    cy.get("[data-testid='json-output']")
+      .invoke('val')
+      .should('match', /Expected property name|end of data while reading object contents/);
     cy.get("[data-testid='input-textarea']").should("exist").type("\"name\":}", options);
-    cy.get("[data-testid='json-output']").should("have.value", "Unexpected token '}', \"{\"name\":}\" is not valid JSON");
+    cy.get("[data-testid='json-output']")
+      .invoke('val')
+      .should("match", /Unexpected token|unexpected character/);
   });
 
   it("clear json output on clear button pressed", () => {
@@ -41,7 +45,8 @@ describe("JSON Validator Page", () => {
     cy.get("[data-testid='json-output']").should("be.empty");
   });
 
-  it("should copy json formatted output on copy button pressed", () => {
+  // Clipboard write/read is only available for Chromium-based browsers in Cypress tests.
+  (Cypress.isBrowser('firefox') ? it.skip : it)("should copy json formatted output on copy button pressed", () => {
     cy.visit("/tools/json-validator");
     cy.get("[data-testid='input-textarea']").should("exist")
       .type(JSON.stringify(inputObject), options);
@@ -69,7 +74,8 @@ describe("JSON Validator Page", () => {
     cy.get("[data-testid='json-output']").should("have.value", JSON.stringify(inputObject, null, 4));
   });
 
-  it("should copy the filtered data if copy button is pressed while filter is given", () => {
+  // Clipboard write/read is only available for Chromium-based browsers in Cypress tests.
+  (Cypress.isBrowser('firefox') ? it.skip : it)("should copy the filtered data if copy button is pressed while filter is given", () => {
     cy.visit("/tools/json-validator");
     cy.get("[data-testid='input-textarea']").should("exist")
       .type(JSON.stringify(inputObject), options);
