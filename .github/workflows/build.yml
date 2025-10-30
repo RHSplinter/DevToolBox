@@ -59,8 +59,6 @@ jobs:
           path: dist/dev-tool-box/browser/
           retention-days: 5
           if-no-files-found: error
-        env:
-          ARTIFACT_ID: ${{ github.run_id }}-${{ github.run_attempt }}
 
   e2e:
     needs: build
