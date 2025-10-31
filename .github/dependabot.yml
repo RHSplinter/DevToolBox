@@ -5,13 +5,32 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # NPM dependency updates
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
       interval: "weekly"
       day: "saturday"
       time: "13:01"
+    open-pull-requests-limit: 10
     groups:
-      npm-dependencies:
+      npm-dependencies-minor:
+        update-types:
+          - minor
+          - patch
+      npm-dependencies-major:
+        update-types:
+          - major
+
+  # GitHub Actions updates
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "13:01"
+    open-pull-requests-limit: 5
+    groups:
+      github-actions-dependencies:
         patterns:
           - "*"
