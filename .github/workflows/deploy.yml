@@ -56,7 +56,7 @@ jobs:
     env:
       DEPLOY_URL: https://devtoolbox.raymondsplinter.com
       AWS_REGION: eu-central-1
-      AWS_ROLE_ARN: arn:aws:iam::120150663375:role/DeployDevToolBoxRole
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
       AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
       AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
     steps:
@@ -93,10 +93,10 @@ jobs:
           
           if [ "$RESPONSE" = "200" ]; then
             # Write result to console and GitHub Step Summary
-            echo "✅ Smoke test passed: Website is accessible at $DEPLOY_URL" | tee -a $GITHUB_STEP_SUMMARY
+            echo "✅ Smoke test passed: Website is accessible at $DEPLOY_URL" >> $GITHUB_STEP_SUMMARY
           else
             # Write result to console and GitHub Step Summary
-            echo "❌ Smoke test failed: HTTP $RESPONSE" | tee -a $GITHUB_STEP_SUMMARY
+            echo "❌ Smoke test failed: HTTP $RESPONSE" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
 
