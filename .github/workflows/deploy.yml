@@ -16,21 +16,17 @@ concurrency:
 permissions:
   contents: read
 
-env:
-  AWS_REGION: eu-central-1
-  AWS_ROLE_ARN: arn:aws:iam::120150663375:role/DeployDevToolBoxRole
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
         with:
           fetch-depth: 1
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 20.x
           cache: npm
@@ -42,7 +38,7 @@ jobs:
         run: npm run build:prod
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: devtoolbox-artifacts
           path: dist/dev-tool-box/browser/
@@ -59,31 +55,35 @@ jobs:
       url: https://devtoolbox.raymondsplinter.com
     env:
       DEPLOY_URL: https://devtoolbox.raymondsplinter.com
+      AWS_REGION: eu-central-1
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+      AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
+      AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: devtoolbox-artifacts
           path: dist/dev-tool-box/browser/
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
         with:
           aws-region: ${{ env.AWS_REGION }}
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
 
       - name: Deploy application to S3
-        run: aws s3 sync dist/dev-tool-box/browser/ s3://${{ secrets.S3_BUCKET }}
+        run: aws s3 sync dist/dev-tool-box/browser/ s3://${{ env.AWS_S3_BUCKET }}
 
       - name: Invalidate CloudFront cache
         id: invalidate
         run: |
-          INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*" --query 'Invalidation.Id' --output text)
+          INVALIDATION_ID=$(aws cloudfront create-invalidation --distribution-id ${{ env.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*" --query 'Invalidation.Id' --output text)
           echo "invalidation-id=$INVALIDATION_ID" >> $GITHUB_OUTPUT
 
       - name: Wait for CloudFront invalidation
         run: |
-          aws cloudfront wait invalidation-completed --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --id ${{ steps.invalidate.outputs.invalidation-id }}
+          aws cloudfront wait invalidation-completed --distribution-id ${{ env.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --id ${{ steps.invalidate.outputs.invalidation-id }}
           echo "✅ CloudFront cache invalidation completed"
 
       - name: Smoke test - Validate deployment
@@ -92,18 +92,18 @@ jobs:
           echo "HTTP Response Code: $RESPONSE"
           
           if [ "$RESPONSE" = "200" ]; then
-            echo "✅ Smoke test passed: Website is accessible at $DEPLOY_URL"
+            echo "✅ Smoke test passed: Website is accessible at $DEPLOY_URL" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ Smoke test failed: HTTP $RESPONSE"
+            echo "❌ Smoke test failed: HTTP $RESPONSE" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
 
       - name: Deployment notification
         if: success()
-        run: echo "✅ Deployment to production completed successfully"
+        run: echo "✅ Deployment to production completed successfully" >> $GITHUB_STEP_SUMMARY
 
       - name: Deployment failure notification
         if: failure()
         run: |
-          echo "❌ Deployment failed"
+          echo "❌ Deployment failed" >> $GITHUB_STEP_SUMMARY
           exit 1
