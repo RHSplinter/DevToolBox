@@ -102,10 +102,10 @@ jobs:
 
       - name: Deployment notification
         if: success()
-        run: echo "✅ Deployment to production completed successfully" >> $GITHUB_STEP_SUMMARY
+        run: echo "✅ Deployment to production completed successfully" | tee -a $GITHUB_STEP_SUMMARY
 
       - name: Deployment failure notification
         if: failure()
         run: |
-          echo "❌ Deployment failed" >> $GITHUB_STEP_SUMMARY
+          echo "❌ Deployment failed" | tee -a $GITHUB_STEP_SUMMARY
           exit 1
