@@ -92,10 +92,8 @@ jobs:
           echo "HTTP Response Code: $RESPONSE"
           
           if [ "$RESPONSE" = "200" ]; then
-            # Write result to console and GitHub Step Summary
             echo "✅ Smoke test passed: Website is accessible at $DEPLOY_URL" >> $GITHUB_STEP_SUMMARY
           else
-            # Write result to console and GitHub Step Summary
             echo "❌ Smoke test failed: HTTP $RESPONSE" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
