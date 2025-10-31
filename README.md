@@ -57,7 +57,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 [app-url]: https://devtoolbox.raymondsplinter.com/
 
-[github-status-url]: https://img.shields.io/github/actions/workflow/status/RHSplinter/DevToolBox/build.yml
+[github-status-url]: https://img.shields.io/github/actions/workflow/status/RHSplinter/DevToolBox/deploy.yml
 
 [angular-url]: https://angular.io/
 
