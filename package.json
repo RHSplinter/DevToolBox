@@ -31,7 +31,7 @@
     "@angular/router": "^20.3.12",
     "@angular/ssr": "^20.3.10",
     "cypress-real-events": "^1.11.0",
-    "express": "^5.1.0",
+    "express": "^5.2.1",
     "highlight.js": "^11.9.0",
     "jsonpath-plus": "^10.3.0",
     "ngx-clipboard": "^16.0.0",
