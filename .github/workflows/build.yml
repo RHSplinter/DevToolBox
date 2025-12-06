@@ -84,6 +84,7 @@ jobs:
   e2e:
     needs: build
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     strategy:
       matrix:
         browser: [chrome, firefox, edge]
