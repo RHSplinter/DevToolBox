@@ -41,22 +41,15 @@ jobs:
         run: npm run build:prod
 
       - name: Run unit tests
-        run: |
-          npm run test:prod 2>&1 | tee test-output.log
-          echo "## Test Results" >> $GITHUB_STEP_SUMMARY
-          if grep -q "SUCCESS" test-output.log; then
-            TOTAL=$(grep -oP 'Executed \K[0-9]+' test-output.log | tail -1)
-            echo "✅ All tests passed" >> $GITHUB_STEP_SUMMARY
-            echo "- Total: $TOTAL" >> $GITHUB_STEP_SUMMARY
-          else
-            FAILED=$(grep -oP '\K[0-9]+(?= FAILED)' test-output.log | tail -1)
-            PASSED=$(grep -oP 'Executed \K[0-9]+' test-output.log | tail -1)
-            echo "❌ Tests failed" >> $GITHUB_STEP_SUMMARY
-            echo "- Passed: $((PASSED - FAILED))" >> $GITHUB_STEP_SUMMARY
-            echo "- Failed: $FAILED" >> $GITHUB_STEP_SUMMARY
-          fi
-          [ -f coverage/devtoolbox/index.html ] && COVERAGE=$(grep -oP 'Overall.*?(\d+\.?\d*)%' coverage/devtoolbox/index.html | grep -oP '\d+\.?\d*%' | head -1) && echo "- Coverage: $COVERAGE" >> $GITHUB_STEP_SUMMARY
-        shell: bash
+        run: npm run test:prod
+
+      - name: Test Report
+        if: always()
+        uses: dorny/test-reporter@fe45e9537387dac839af0d33ba56eed8e24189e8 # v2.3.0
+        with:
+          name: Tests Results
+          path: test_results/test-output.xml
+          reporter: jest-junit
 
       - name: Upload build artifacts
         id: artifact

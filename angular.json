@@ -96,7 +96,8 @@
             "scripts": [],
             "codeCoverageExclude": [
               "/**/app.routes.ts"
-            ]
+            ],
+            "karmaConfig": "karma.conf.cjs"
           }
         },
         "lint": {
