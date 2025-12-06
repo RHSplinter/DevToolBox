@@ -21,7 +21,8 @@
   },
   "include": [
     "src/**/*.ts",
-    "./node_modules/@types/jest"
+    "./node_modules/@types/jest",
+    "test-setup.ts"
   ],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

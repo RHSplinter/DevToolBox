@@ -3,8 +3,8 @@ name: CI Build
 on:
   push:
     paths-ignore:
-      - '**.md'
-      - 'LICENSE.txt'
+      - "**.md"
+      - "LICENSE.txt"
   pull_request:
     branches:
       - main
@@ -43,13 +43,33 @@ jobs:
       - name: Run unit tests
         run: npm run test:prod
 
-      - name: Upload coverage reports
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+      - name: Upload Test Results Report
+        if: always()
+        uses: dorny/test-reporter@fe45e9537387dac839af0d33ba56eed8e24189e8 # v2.3.0
         with:
-          name: coverage-reports
-          path: coverage/
-          retention-days: 7
-          if-no-files-found: warn
+          name: Test Results
+          path: test_results/test-output.xml
+          reporter: java-junit
+          report-title: Test Results
+
+      - name: Create Code Coverage Summary Report
+        if: always()
+        uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 #v1.3.0
+        with:
+          filename: "test_results/coverage/cobertura-coverage.xml"
+          badge: true
+          format: "markdown"
+          output: "both"
+
+      - name: Upload Code Coverage Report
+        if: always()
+        run: |
+          echo "# Code Coverage" >> $GITHUB_STEP_SUMMARY
+          if [ -f code-coverage-results.md ]; then
+            cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Coverage report not found" >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Upload build artifacts
         id: artifact
