@@ -31,7 +31,7 @@
     "highlight.js": "^11.9.0",
     "jsonpath-plus": "^10.3.0",
     "ngx-clipboard": "^16.0.0",
-    "ngx-highlight-js": "^20.0.1",
+    "ngx-highlight-js": "^21.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.16.0"
