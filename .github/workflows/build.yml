@@ -43,7 +43,7 @@ jobs:
       - name: Run unit tests
         run: npm run test:prod
 
-      - name: Create Test Results Report
+      - name: Upload Test Results Report
         if: always()
         uses: dorny/test-reporter@fe45e9537387dac839af0d33ba56eed8e24189e8 # v2.3.0
         with:
@@ -51,7 +51,7 @@ jobs:
           path: test_results/test-output.xml
           reporter: java-junit
 
-      - name: Code Coverage Summary Report
+      - name: Create Code Coverage Summary Report
         if: always()
         uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 #v1.3.0
         with:
@@ -59,6 +59,10 @@ jobs:
           badge: true
           format: "markdown"
           output: "both"
+
+      - name: Upload Code Coverage Report
+        if: always()
+        run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
       - name: Upload build artifacts
         id: artifact
