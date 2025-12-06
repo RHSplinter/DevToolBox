@@ -29,7 +29,7 @@ module.exports = function (config) {
       reporters: [
         { type: 'html' },
         { type: 'text-summary' },
-        { type: 'cobertura' }
+        { type: 'cobertura' },
       ]
     },
     reporters: ['progress', 'junit'],
