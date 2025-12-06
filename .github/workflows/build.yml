@@ -51,13 +51,14 @@ jobs:
           path: test_results/test-output.xml
           reporter: java-junit
 
-      - name: Create Code Coverage Report
+      - name: Code Coverage Summary Report
         if: always()
-        uses: dorny/test-reporter@fe45e9537387dac839af0d33ba56eed8e24189e8 # v2.3.0
+        uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 #v1.3.0
         with:
-          name: Code Coverage Results
-          path: test_results/coverage/cobertura-coverage.xml
-          reporter: cobertura
+          filename: "test_results/coverage/cobertura-coverage.xml"
+          badge: true
+          format: "markdown"
+          output: "both"
 
       - name: Upload build artifacts
         id: artifact
