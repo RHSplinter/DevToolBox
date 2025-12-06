@@ -42,14 +42,20 @@ jobs:
 
       - name: Run unit tests
         run: |
-          npm run test:prod
-          echo "## Test Coverage" >> $GITHUB_STEP_SUMMARY
-          if [ -f coverage/devtoolbox/index.html ]; then
-            echo "### Coverage Summary" >> $GITHUB_STEP_SUMMARY
-            grep -o "Overall.*%" coverage/devtoolbox/index.html | head -1 >> $GITHUB_STEP_SUMMARY 2>/dev/null || echo "Coverage report generated" >> $GITHUB_STEP_SUMMARY
+          npm run test:prod 2>&1 | tee test-output.log
+          echo "## Test Results" >> $GITHUB_STEP_SUMMARY
+          if grep -q "SUCCESS" test-output.log; then
+            TOTAL=$(grep -oP 'Executed \K[0-9]+' test-output.log | tail -1)
+            echo "✅ All tests passed" >> $GITHUB_STEP_SUMMARY
+            echo "- Total: $TOTAL" >> $GITHUB_STEP_SUMMARY
           else
-            echo "Coverage report generated successfully" >> $GITHUB_STEP_SUMMARY
+            FAILED=$(grep -oP '\K[0-9]+(?= FAILED)' test-output.log | tail -1)
+            PASSED=$(grep -oP 'Executed \K[0-9]+' test-output.log | tail -1)
+            echo "❌ Tests failed" >> $GITHUB_STEP_SUMMARY
+            echo "- Passed: $((PASSED - FAILED))" >> $GITHUB_STEP_SUMMARY
+            echo "- Failed: $FAILED" >> $GITHUB_STEP_SUMMARY
           fi
+          [ -f coverage/devtoolbox/index.html ] && COVERAGE=$(grep -oP 'Overall.*?(\d+\.?\d*)%' coverage/devtoolbox/index.html | grep -oP '\d+\.?\d*%' | head -1) && echo "- Coverage: $COVERAGE" >> $GITHUB_STEP_SUMMARY
         shell: bash
 
       - name: Upload build artifacts
