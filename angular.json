@@ -82,7 +82,7 @@
             "polyfills": [
               "zone.js",
               "zone.js/testing",
-              "src/test-setup.ts"
+              "test-setup.ts"
             ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
