@@ -43,13 +43,21 @@ jobs:
       - name: Run unit tests
         run: npm run test:prod
 
-      - name: Test Report
+      - name: Create Test Results Report
         if: always()
         uses: dorny/test-reporter@fe45e9537387dac839af0d33ba56eed8e24189e8 # v2.3.0
         with:
-          name: Tests Results
+          name: Test Results
           path: test_results/test-output.xml
           reporter: java-junit
+
+      - name: Create Code Coverage Report
+        if: always()
+        uses: dorny/test-reporter@fe45e9537387dac839af0d33ba56eed8e24189e8 # v2.3.0
+        with:
+          name: Code Coverage Results
+          path: test_results/coverage/cobertura-coverage.xml
+          reporter: cobertura
 
       - name: Upload build artifacts
         id: artifact
