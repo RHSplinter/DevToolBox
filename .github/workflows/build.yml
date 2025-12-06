@@ -51,7 +51,6 @@ jobs:
           path: test_results/test-output.xml
           reporter: java-junit
           report-title: Test Results
-          only-summary: true
 
       - name: Create Code Coverage Summary Report
         if: always()
