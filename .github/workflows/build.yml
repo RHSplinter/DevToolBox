@@ -41,10 +41,11 @@ jobs:
         run: npm run build:prod
 
       - name: Run unit tests
+        id: unit-tests
         run: npm run test:prod
 
-      - name: Upload Test Results Report
-        if: always()
+      - name: Upload Test Result Report
+        if: steps.unit-tests.conclusion != 'skipped'
         uses: dorny/test-reporter@fe45e9537387dac839af0d33ba56eed8e24189e8 # v2.3.0
         with:
           name: Test Results
@@ -53,7 +54,7 @@ jobs:
           report-title: Test Results
 
       - name: Create Code Coverage Summary Report
-        if: always()
+        if: steps.unit-tests.conclusion != 'skipped'
         uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 #v1.3.0
         with:
           filename: "test_results/coverage/cobertura-coverage.xml"
@@ -62,7 +63,7 @@ jobs:
           output: "both"
 
       - name: Upload Code Coverage Report
-        if: always()
+        if: steps.unit-tests.conclusion != 'skipped'
         run: |
           echo "# Code Coverage" >> $GITHUB_STEP_SUMMARY
           if [ -f code-coverage-results.md ]; then
