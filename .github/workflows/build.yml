@@ -74,7 +74,7 @@ jobs:
 
       - name: Upload build artifacts
         id: artifact
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: devtoolbox-artifacts
           path: dist/dev-tool-box/browser/
@@ -96,13 +96,13 @@ jobs:
           fetch-depth: 1
 
       - name: Download build artifacts
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: devtoolbox-artifacts
           path: dist/dev-tool-box/browser/
 
       - name: Run E2E tests
-        uses: cypress-io/github-action@7ef72e250a9e564efb4ed4c2433971ada4cc38b4 # v6.10.4
+        uses: cypress-io/github-action@d842ab15a88774cf1311cc07f0e7112024c3dbd7 # v6.10.6
         with:
           start: npm run start
           wait-on: http://localhost:4200
@@ -111,7 +111,7 @@ jobs:
           spec: cypress/e2e/**/*.cy.ts
 
       - name: Upload Cypress screenshots
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         if: failure()
         with:
           name: cypress-screenshots-${{ matrix.browser }}
@@ -120,7 +120,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Upload Cypress videos
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         if: always()
         with:
           name: cypress-videos-${{ matrix.browser }}
