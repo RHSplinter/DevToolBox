@@ -56,7 +56,7 @@
     "baseline-browser-mapping": "^2.10.0",
     "cypress": "^15.11.0",
     "diff": "^8.0.3",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.3",
     "jasmine-core": "~6.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
