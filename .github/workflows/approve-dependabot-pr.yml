@@ -1,4 +1,3 @@
-
 name: "Approve Dependabot PR's"
 on:
   workflow_dispatch:
@@ -17,35 +16,18 @@ jobs:
     outputs:
       ecosystem: ${{ steps.metadata.outputs.package-ecosystem }}
       update-type: ${{ steps.metadata.outputs.update-type }}
-      token: ${{ steps.get-token.outputs.token }}
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@a90bcbc6539c36a85cdfeb73f7e2f433735f215b # v2.15.0
         with:
           egress-policy: audit
 
-      - name: Get correct token to use
-        if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
-        id: get-token
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # shell script to use either secrets.GH_TOKEN or secrets.GITHUB_TOKEN depending on which is set
-          if [[ "$GH_TOKEN" ]]; then
-            echo "Using GH_TOKEN"
-            echo "token=$GH_TOKEN" > "$GITHUB_OUTPUT"
-          else
-            echo "Using GITHUB_TOKEN"
-            echo "token=$GITHUB_TOKEN" > "$GITHUB_OUTPUT"
-          fi
-
       - name: Load Dependabot metadata
         if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
         id: metadata
         uses: dependabot/fetch-metadata@ffa630c65fa7e0ecfa0625b5ceda64399aea1b36 #v3.0.0
         with:
-          github-token: ${{ steps.get-token.outputs.token }}
+          github-token: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Show Dependabot metadata info
         if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
@@ -79,16 +61,14 @@ jobs:
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ needs.dependabot-check.outputs.token }}
-          GH_TOKEN: ${{ needs.dependabot-check.outputs.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Enable auto-merge for Dependabot PRs
         if: github.event.pull_request.user.login == 'dependabot[bot]' || needs.dependabot-check.outputs.ecosystem == 'github-actions'
         run: gh pr merge --auto --merge "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ needs.dependabot-check.outputs.token }}
-          GH_TOKEN: ${{ needs.dependabot-check.outputs.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
 
   dependabot-other:
     runs-on: ubuntu-latest
@@ -109,16 +89,14 @@ jobs:
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ needs.dependabot-check.outputs.token }}
-          GH_TOKEN: ${{ needs.dependabot-check.outputs.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Enable auto-merge for Dependabot PRs
         if: (github.event.pull_request.user.login == 'dependabot[bot]' || needs.dependabot-check.outputs.ecosystem == 'github-actions') && (needs.dependabot-check.outputs.update-type == 'version-update:semver-minor' || needs.dependabot-check.outputs.update-type == 'version-update:semver-patch')
         run: gh pr merge --auto --merge "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ needs.dependabot-check.outputs.token }}
-          GH_TOKEN: ${{ needs.dependabot-check.outputs.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
 
   not-dependabot:
     runs-on: ubuntu-latest
