@@ -79,6 +79,7 @@ jobs:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ needs.dependabot-check.outputs.token }}
+          GH_TOKEN: ${{ needs.dependabot-check.outputs.token }}
 
       - name: Enable auto-merge for Dependabot PRs
         if: github.event.pull_request.user.login == 'dependabot[bot]' || needs.dependabot-check.outputs.ecosystem == 'github-actions'
@@ -86,6 +87,7 @@ jobs:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ needs.dependabot-check.outputs.token }}
+          GH_TOKEN: ${{ needs.dependabot-check.outputs.token }}
 
   dependabot-other:
     runs-on: ubuntu-latest
@@ -107,6 +109,7 @@ jobs:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ needs.dependabot-check.outputs.token }}
+          GH_TOKEN: ${{ needs.dependabot-check.outputs.token }}
 
       - name: Enable auto-merge for Dependabot PRs
         if: (github.event.pull_request.user.login == 'dependabot[bot]' || needs.dependabot-check.outputs.ecosystem == 'github-actions') && (needs.dependabot-check.outputs.update-type == 'version-update:semver-minor' || needs.dependabot-check.outputs.update-type == 'version-update:semver-patch')
@@ -114,6 +117,7 @@ jobs:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ needs.dependabot-check.outputs.token }}
+          GH_TOKEN: ${{ needs.dependabot-check.outputs.token }}
 
   not-dependabot:
     runs-on: ubuntu-latest
