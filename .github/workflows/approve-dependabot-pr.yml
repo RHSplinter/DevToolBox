@@ -61,7 +61,7 @@ jobs:
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Enable auto-merge for Dependabot PRs
         if: github.event.pull_request.user.login == 'dependabot[bot]' || needs.dependabot-check.outputs.ecosystem == 'github-actions'
@@ -89,7 +89,7 @@ jobs:
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Enable auto-merge for Dependabot PRs
         if: (github.event.pull_request.user.login == 'dependabot[bot]' || needs.dependabot-check.outputs.ecosystem == 'github-actions') && (needs.dependabot-check.outputs.update-type == 'version-update:semver-minor' || needs.dependabot-check.outputs.update-type == 'version-update:semver-patch')
