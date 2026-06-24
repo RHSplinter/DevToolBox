@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from "@angular/core";
+import { Component, OnInit, inject, ChangeDetectionStrategy } from "@angular/core";
 import {DatePipe} from "@angular/common";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
@@ -13,6 +13,7 @@ import {MatSelectModule} from "@angular/material/select";
     imports: [FormsModule, MatInputModule, MatButtonModule, ReactiveFormsModule, OutputFieldComponent, MatSelectModule],
     providers: [DatePipe],
     templateUrl: "./time-converter.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: "./time-converter.component.scss"
 })
 export class TimeConverterComponent implements OnInit {

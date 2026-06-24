@@ -1,4 +1,5 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {ChangeDetectorRef} from "@angular/core";
 
 import {NavListComponent} from "./nav-list.component";
 import {provideRouter} from "@angular/router";
@@ -42,7 +43,7 @@ describe(NavListComponent.name, () => {
       {name: "about", path: "about"}
     ];
     component.navItems = mockNavItems;
-    fixture.detectChanges();
+    fixture.debugElement.injector.get(ChangeDetectorRef).detectChanges();
 
     const navList = fixture.nativeElement.querySelector("mat-nav-list");
     const listItems = navList.querySelectorAll("a");

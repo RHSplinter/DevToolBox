@@ -34,7 +34,7 @@ describe(ReadonlyTextAreaComponent.name, () => {
   });
 
   it("should display the output", () => {
-    component.output = "value";
+    fixture.componentRef.setInput("output", "value");
     fixture.detectChanges();
     const textarea = fixture.nativeElement.querySelector(".section-textarea");
     expect(textarea.value).toEqual("value");

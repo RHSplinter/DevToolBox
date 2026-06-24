@@ -51,7 +51,7 @@ describe(TextAreaComponent.name, () => {
   });
 
   it("should show a select field, if options is populated", async () => {
-    component.options = ["encode", "decode"];
+    fixture.componentRef.setInput("options", ["encode", "decode"]);
     fixture.detectChanges();
     const select: MatSelectHarness = await loader.getHarness(MatSelectHarness);
     await select.open();
@@ -63,7 +63,7 @@ describe(TextAreaComponent.name, () => {
 
   it("should be able to select and update options", async () => {
     spyOn(component.optionChanged, "emit").and.callFake((value: string) => expect(value).toEqual("decode"));
-    component.options = ["encode", "decode"];
+    fixture.componentRef.setInput("options", ["encode", "decode"]);
     fixture.detectChanges();
     const select: MatSelectHarness = await loader.getHarness(MatSelectHarness);
     await select.open();

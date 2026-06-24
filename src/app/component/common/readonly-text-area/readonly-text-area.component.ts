@@ -1,10 +1,11 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, ChangeDetectionStrategy} from "@angular/core";
 import {MatButtonModule} from "@angular/material/button";
 
 @Component({
     selector: "app-readonly-text-area",
     imports: [MatButtonModule],
     templateUrl: "./readonly-text-area.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./readonly-text-area.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class ReadonlyTextAreaComponent {

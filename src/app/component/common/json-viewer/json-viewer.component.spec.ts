@@ -51,8 +51,7 @@ describe(JsonViewerComponent.name, () => {
   });
 
   it("should display the formatted json object", () => {
-    component.jsonInput = inputObject;
-    component.ngOnChanges();
+    fixture.componentRef.setInput("jsonInput", inputObject);
     fixture.detectChanges();
     const textarea = fixture.nativeElement.querySelector("textarea");
     expect(textarea.value).toEqual(JSON.stringify(inputObject, null, 4));

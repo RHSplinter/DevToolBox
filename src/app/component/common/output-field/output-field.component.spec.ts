@@ -23,8 +23,8 @@ describe(OutputFieldComponent.name, () => {
   });
 
   it("should display given label and input value", () => {
-    component.label = "Label";
-    component.value = "Value";
+    fixture.componentRef.setInput("label", "Label");
+    fixture.componentRef.setInput("value", "Value");
     fixture.detectChanges();
     const label = fixture.nativeElement.querySelector("label");
     const input = fixture.nativeElement.querySelector("input");

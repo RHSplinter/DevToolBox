@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, ChangeDetectionStrategy} from "@angular/core";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
@@ -9,6 +9,7 @@ import {ClipboardModule} from "ngx-clipboard";
     selector: "app-output-field",
     imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, ClipboardModule],
     templateUrl: "./output-field.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: "./output-field.component.scss"
 })
 export class OutputFieldComponent {

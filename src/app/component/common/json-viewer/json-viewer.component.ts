@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from "@angular/core";
+import {Component, Input, OnChanges, OnInit, ChangeDetectionStrategy} from "@angular/core";
 import {HighlightJsDirective} from "ngx-highlight-js";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
@@ -12,6 +12,7 @@ import {JSONPath} from "jsonpath-plus";
     selector: "app-json-viewer",
     imports: [HighlightJsDirective, MatCardModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatInputModule],
     templateUrl: "./json-viewer.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./json-viewer.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class JsonViewerComponent implements OnChanges, OnInit {
