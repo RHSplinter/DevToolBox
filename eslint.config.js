@@ -50,10 +50,6 @@ export default [
     rules: {
       ...js.configs.recommended.rules,
       ...plugin.configs.recommended.rules,
-      // The v22 migration adds an explicit `ChangeDetectionStrategy.Eager` to every
-      // component to preserve the pre-v22 default behavior. Adopting OnPush across the
-      // app is a behavioral change that is out of scope for the version upgrade.
-      "@angular-eslint/prefer-on-push-component-change-detection": "off",
       "@angular-eslint/directive-selector": [
         "error",
         {

@@ -7,7 +7,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
     selector: "app-root",
     imports: [RouterOutlet, NavListComponent, MatSidenavModule],
     templateUrl: "./app.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: "./app.component.scss"
 })
 export class AppComponent {

@@ -5,7 +5,7 @@ import {MatDividerModule} from "@angular/material/divider";
     selector: "app-footer",
     imports: [MatDividerModule],
     templateUrl: "./footer.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: "./footer.component.scss"
 })
 export class FooterComponent {

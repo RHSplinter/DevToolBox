@@ -12,7 +12,7 @@ import {JSONPath} from "jsonpath-plus";
     selector: "app-json-viewer",
     imports: [HighlightJsDirective, MatCardModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatInputModule],
     templateUrl: "./json-viewer.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./json-viewer.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class JsonViewerComponent implements OnChanges, OnInit {

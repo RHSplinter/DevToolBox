@@ -7,7 +7,7 @@ import {MatSelectModule} from "@angular/material/select";
     selector: "app-text-area",
     imports: [MatButtonModule, ReactiveFormsModule, MatSelectModule],
     templateUrl: "./text-area.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./text-area.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class TextAreaComponent implements OnInit {

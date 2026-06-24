@@ -5,7 +5,7 @@ import {MatButtonModule} from "@angular/material/button";
     selector: "app-readonly-text-area",
     imports: [MatButtonModule],
     templateUrl: "./readonly-text-area.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./readonly-text-area.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class ReadonlyTextAreaComponent {

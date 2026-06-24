@@ -8,7 +8,7 @@ import {FooterComponent} from "../footer/footer.component";
     selector: "app-error",
     imports: [MatDividerModule, MatButtonModule, RouterLink, FooterComponent],
     templateUrl: "./error.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: "./error.component.scss"
 })
 export class ErrorComponent {

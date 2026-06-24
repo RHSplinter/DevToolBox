@@ -9,7 +9,7 @@ import {ClipboardModule} from "ngx-clipboard";
     selector: "app-output-field",
     imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, ClipboardModule],
     templateUrl: "./output-field.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: "./output-field.component.scss"
 })
 export class OutputFieldComponent {

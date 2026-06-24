@@ -1,4 +1,5 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {ChangeDetectorRef} from "@angular/core";
 
 import {JsonValidatorComponent} from "./json-validator.component";
 
@@ -31,7 +32,7 @@ describe(JsonValidatorComponent.name, () => {
     const inputObj: object = {name: "John Doe", age: 42};
     const input: string = JSON.stringify(inputObj);
     component.validateJson(input);
-    fixture.detectChanges();
+    fixture.debugElement.injector.get(ChangeDetectorRef).detectChanges();
     const jsonOutput = fixture.nativeElement.querySelector("app-json-viewer textarea");
     expect(jsonOutput.textContent).toEqual(JSON.stringify(inputObj, null, 4));
   });
@@ -45,7 +46,7 @@ describe(JsonValidatorComponent.name, () => {
 
   it("should show the error, if parsing error is thrown", () => {
     component.validateJson("{");
-    fixture.detectChanges();
+    fixture.debugElement.injector.get(ChangeDetectorRef).detectChanges();
     const jsonOutput = fixture.nativeElement.querySelector("app-json-viewer textarea");
     expect(jsonOutput.textContent).toEqual("Expected property name or '}' in JSON at position 1 (line 1 column 2)");
   });

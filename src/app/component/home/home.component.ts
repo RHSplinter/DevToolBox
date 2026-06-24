@@ -6,7 +6,7 @@ import {FooterComponent} from "../footer/footer.component";
     selector: "app-home",
     imports: [MatDividerModule, FooterComponent],
     templateUrl: "./home.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: "./home.component.scss"
 })
 export class HomeComponent {

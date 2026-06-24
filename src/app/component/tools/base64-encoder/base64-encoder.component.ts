@@ -9,7 +9,7 @@ import {EncodingOptions} from "../../../model/encoding-options";
     selector: "app-base64-encoder",
     imports: [TextAreaComponent, MatGridListModule, ReadonlyTextAreaComponent],
     templateUrl: "./base64-encoder.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./base64-encoder.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class Base64EncoderComponent {

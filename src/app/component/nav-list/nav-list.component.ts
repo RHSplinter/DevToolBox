@@ -8,7 +8,7 @@ import {NavListItem} from "../../model/nav-list-item";
     selector: "app-nav-list",
     imports: [MatListModule, RouterLink, MatIconModule, RouterLinkActive],
     templateUrl: "./nav-list.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: "./nav-list.component.scss"
 })
 export class NavListComponent {

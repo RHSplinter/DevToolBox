@@ -13,7 +13,7 @@ import {MatSelectModule} from "@angular/material/select";
     imports: [FormsModule, MatInputModule, MatButtonModule, ReactiveFormsModule, OutputFieldComponent, MatSelectModule],
     providers: [DatePipe],
     templateUrl: "./time-converter.component.html",
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: "./time-converter.component.scss"
 })
 export class TimeConverterComponent implements OnInit {

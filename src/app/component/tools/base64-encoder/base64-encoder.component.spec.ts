@@ -1,4 +1,5 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
+import {ChangeDetectorRef} from "@angular/core";
 
 import {Base64EncoderComponent} from "./base64-encoder.component";
 import {EncodingService} from "../../../service/encoding.service";
@@ -42,7 +43,7 @@ describe(Base64EncoderComponent.name, () => {
   it("should populate output without encoding", () => {
     component.selectedOption = "";
     component.transform("Value");
-    fixture.detectChanges();
+    fixture.debugElement.injector.get(ChangeDetectorRef).detectChanges();
     const readOnlyTextArea = fixture.nativeElement.querySelector("app-readonly-text-area textarea");
     expect(readOnlyTextArea.value).toEqual("Value");
   });
@@ -51,7 +52,7 @@ describe(Base64EncoderComponent.name, () => {
     encodingService.encode.and.returnValue("VmFsdWU=")
     component.selectedOption = EncodingOptions.ENCODE;
     component.transform("Value");
-    fixture.detectChanges();
+    fixture.debugElement.injector.get(ChangeDetectorRef).detectChanges();
     const readOnlyTextArea = fixture.nativeElement.querySelector("app-readonly-text-area textarea");
     expect(encodingService.encode).toHaveBeenCalledWith("Value");
     expect(readOnlyTextArea.value).toEqual("VmFsdWU=");
@@ -61,7 +62,7 @@ describe(Base64EncoderComponent.name, () => {
     encodingService.decode.and.returnValue("Value");
     component.selectedOption = EncodingOptions.DECODE;
     component.transform("VmFsdWU=");
-    fixture.detectChanges();
+    fixture.debugElement.injector.get(ChangeDetectorRef).detectChanges();
     const readOnlyTextArea = fixture.nativeElement.querySelector("app-readonly-text-area textarea");
     expect(encodingService.decode).toHaveBeenCalledWith("VmFsdWU=");
     expect(readOnlyTextArea.value).toEqual("Value");
@@ -71,7 +72,7 @@ describe(Base64EncoderComponent.name, () => {
     encodingService.urlEncode.and.returnValue("https%3A%2F%2Fgoogle.com%3F");
     component.selectedOption = EncodingOptions.URL_ENCODE;
     component.transform("https://google.com?");
-    fixture.detectChanges();
+    fixture.debugElement.injector.get(ChangeDetectorRef).detectChanges();
     const readOnlyTextArea = fixture.nativeElement.querySelector("app-readonly-text-area textarea");
     expect(encodingService.urlEncode).toHaveBeenCalledWith("https://google.com?");
     expect(readOnlyTextArea.value).toEqual("https%3A%2F%2Fgoogle.com%3F");
@@ -81,7 +82,7 @@ describe(Base64EncoderComponent.name, () => {
     encodingService.urlDecode.and.returnValue("https://google.com?");
     component.selectedOption = EncodingOptions.URL_DECODE;
     component.transform("https%3A%2F%2Fgoogle.com%3F");
-    fixture.detectChanges();
+    fixture.debugElement.injector.get(ChangeDetectorRef).detectChanges();
     const readOnlyTextArea = fixture.nativeElement.querySelector("app-readonly-text-area textarea");
     expect(encodingService.urlDecode).toHaveBeenCalledWith("https%3A%2F%2Fgoogle.com%3F");
     expect(readOnlyTextArea.value).toEqual("https://google.com?");
@@ -91,7 +92,7 @@ describe(Base64EncoderComponent.name, () => {
     encodingService.decode.and.throwError("Invalid Base64 string");
     component.selectedOption = EncodingOptions.DECODE;
     component.transform("https://google.com?");
-    fixture.detectChanges();
+    fixture.debugElement.injector.get(ChangeDetectorRef).detectChanges();
     const readOnlyTextArea = fixture.nativeElement.querySelector("app-readonly-text-area textarea");
     expect(encodingService.decode).toHaveBeenCalledWith("https://google.com?");
     expect(readOnlyTextArea.value).toEqual("Invalid input: Unable to decode text");
