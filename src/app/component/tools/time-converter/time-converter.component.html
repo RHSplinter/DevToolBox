@@ -19,14 +19,14 @@
   </mat-form-field>
 
   <h1 class="output-header">Output:</h1>
-  <app-output-field [label]="'UTC timezone'" [value]="timeConversionForm.get('utcTime')?.value"></app-output-field>
-  <app-output-field [label]="'Local timezone'" [value]="timeConversionForm.get('localTime')?.value"></app-output-field>
-  <app-output-field [label]="'ISO 8601'" [value]="timeConversionForm.get('isoTime')?.value"></app-output-field>
-  <app-output-field [label]="'Unix time'" [value]="timeConversionForm.get('unixTime')?.value"></app-output-field>
+  <app-output-field [label]="'UTC timezone'" [value]="$safeNavigationMigration(timeConversionForm.get('utcTime')?.value)"></app-output-field>
+  <app-output-field [label]="'Local timezone'" [value]="$safeNavigationMigration(timeConversionForm.get('localTime')?.value)"></app-output-field>
+  <app-output-field [label]="'ISO 8601'" [value]="$safeNavigationMigration(timeConversionForm.get('isoTime')?.value)"></app-output-field>
+  <app-output-field [label]="'Unix time'" [value]="$safeNavigationMigration(timeConversionForm.get('unixTime')?.value)"></app-output-field>
   <app-output-field [label]="'Week of year'" [value]="convertUtcToFormat('w') ?? ''"></app-output-field>
   <app-output-field [label]="'Day of week'" [value]="convertUtcToFormat('cccc') ?? ''"></app-output-field>
 
-  @if (this.timeConversionForm.get("utcTime")?.value !== null && this.timeConversionForm.get("utcTime")?.value !== "Invalid Date") {
+  @if ($safeNavigationMigration(this.timeConversionForm.get("utcTime")?.value) !== null && this.timeConversionForm.get("utcTime")?.value !== "Invalid Date") {
     <h2 data-testid="other-formats-header" class="output-header">Other date formats:</h2>
     @for (format of otherDateFormats; track format) {
       <app-output-field [value]="convertUtcToFormat(format) ?? ''" [label]="format"></app-output-field>

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { TextAreaComponent } from "../../common/text-area/text-area.component";
 import { JsonViewerComponent } from "../../common/json-viewer/json-viewer.component";
@@ -7,6 +7,7 @@ import { JsonViewerComponent } from "../../common/json-viewer/json-viewer.compon
   selector: "app-json-validator",
   imports: [MatGridListModule, TextAreaComponent, JsonViewerComponent],
   templateUrl: "./json-validator.component.html",
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ["./json-validator.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class JsonValidatorComponent {

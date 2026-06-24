@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy} from "@angular/core";
 import {MatButtonModule} from "@angular/material/button";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {MatSelectModule} from "@angular/material/select";
@@ -7,6 +7,7 @@ import {MatSelectModule} from "@angular/material/select";
     selector: "app-text-area",
     imports: [MatButtonModule, ReactiveFormsModule, MatSelectModule],
     templateUrl: "./text-area.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ["./text-area.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class TextAreaComponent implements OnInit {

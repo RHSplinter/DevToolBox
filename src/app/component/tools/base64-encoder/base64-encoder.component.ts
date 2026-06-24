@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
 import {TextAreaComponent} from "../../common/text-area/text-area.component";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {ReadonlyTextAreaComponent} from "../../common/readonly-text-area/readonly-text-area.component";
@@ -9,6 +9,7 @@ import {EncodingOptions} from "../../../model/encoding-options";
     selector: "app-base64-encoder",
     imports: [TextAreaComponent, MatGridListModule, ReadonlyTextAreaComponent],
     templateUrl: "./base64-encoder.component.html",
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ["./base64-encoder.component.scss", "../../../styles/tools-styles.scss"]
 })
 export class Base64EncoderComponent {
