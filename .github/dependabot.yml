@@ -11,8 +11,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
-      time: "13:01"
-    open-pull-requests-limit: 10
+      time: "01:02"
+    open-pull-requests-limit: 2
     groups:
       npm-dependencies-minor:
         update-types:
@@ -28,8 +28,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "saturday"
-      time: "13:01"
-    open-pull-requests-limit: 5
+      time: "01:02"
+    open-pull-requests-limit: 1
     groups:
       github-actions-dependencies:
         patterns:
