@@ -40,9 +40,9 @@ export class JsonViewerComponent implements OnChanges, OnInit {
     this.formattedJsonObject = this.stringifyJsonObject(this.jsonInput || "");
   }
 
-  private stringifyJsonObject(jsonObject: object | string): string {
+  private stringifyJsonObject(jsonObject: unknown): string {
     if (typeof jsonObject === "string") {
-      return jsonObject as string;
+      return jsonObject;
     }
     const spacing: number = parseInt(this.spacingControl.value || "4");
     return JSON.stringify(jsonObject, null, spacing);
